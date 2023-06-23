@@ -12,7 +12,7 @@ logger = logging.getLogger("uvicorn.error")
 
 
 @app.post('/check_project', response_model=ResponsePDF)
-def single_pdf(id:int, extra_name:str, request_archive: UploadFile = File(...)):
+def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)):
     try:
         files_names = []
         list_fiels = []

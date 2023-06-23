@@ -39,7 +39,7 @@ files = {
 }
 
 # Send the request
-response = requests.post(url, data=data, files=files)
+response = requests.post(url, params=data, files=files)
 
 # Print the response
 print(response.json())
