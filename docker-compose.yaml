@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+  rml:
+    build:
+      context: .
+      dockerfile: rml_dockerfile
+    command: uvicorn services.gateway.app:app --host 0.0.0.0 --port 6432
+    ports:
+      - '6432:6432'
+    env_file:
+      - ./docker.env
