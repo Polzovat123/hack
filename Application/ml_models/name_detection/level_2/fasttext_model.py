@@ -19,7 +19,7 @@ class FastTextModel(ExecuteModel):
             for j in range(max_dist):
                 combination.append(words[i + j])
             emb = self.model.get_sentence_vector(" ".join(combination))
-            if 1 - cosine(value_vec, emb)> 0.5:
+            if 1 - cosine(value_vec, emb) > 0.5:
                 combinations.append(i)
 
         ans = []
