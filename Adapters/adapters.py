@@ -20,10 +20,11 @@ class ZipAdapter:
             shutil.copyfileobj(file.file, buffer)
 
         with zipfile.ZipFile(file.filename, "r") as zip_ref:
-            zip_ref.extractall(f"source/{id}")
+            zip_ref.extractall(f"source")
 
         os.remove(file.filename)
-        return os.listdir("..")
+        print(f"source/{file.filename[:file.filename.find('.')]}")
+        return os.listdir(f"source/{file.filename[:file.filename.find('.')]}"), f"source/{file.filename[:file.filename.find('.')]}"
 
 
 class PDFAdapter:

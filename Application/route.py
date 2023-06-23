@@ -17,12 +17,10 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
         files_names = []
         list_fiels = []
 
-        # id, extra_name, archive = JSONAdapter().parse(request, request_archive)
-
-        files_pdf = ZipAdapter().parse(request_archive, id)
+        files_pdf, header = ZipAdapter().parse(request_archive, id)
 
         for file_pdf in files_pdf:
-            pages_in_pdf = PDFAdapter().extract(file_pdf)
+            pages_in_pdf = PDFAdapter().extract(header+'/'+file_pdf)
             for num_page, page_text in enumerate(pages_in_pdf):
                 list_fiels.extend(ExecuteModel().execute(file_pdf, num_page, id, extra_name))
     except Exception as e:
