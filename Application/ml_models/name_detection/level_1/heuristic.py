@@ -7,9 +7,6 @@ from Application.pdan import Files
 
 class HeuristicModel(ExecuteModel):
 
-    def _standardize(self, string: str) -> str:
-        return string.lower().replace('\n', ' ').replace('  ', ' ')
-
     def _find_local_minima_with_plateau(self, arr, plateau_threshold=0.0):
         minima = []
         n = len(arr)

@@ -2,6 +2,9 @@ from Application.pdan import Files
 
 
 class ExecuteModel:
+    def _standardize(self, string: str) -> str:
+        return string.lower().replace('\n', ' ').replace('  ', ' ')
+
     def execute(self, file_name, folder, correct_name, page_text):
         ans = []
         if True:
