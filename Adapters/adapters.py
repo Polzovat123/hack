@@ -41,6 +41,16 @@ class ZipAdapter:
         else:
             return False
 
+    def _find_pdf_paths(self, root_folder):
+        pdf_paths = []
+
+        for dirpath, dirnames, filenames in os.walk(root_folder):
+            for filename in filenames:
+                if filename.find('.') > -1:
+                    pdf_paths.append(os.path.join(dirpath, filename))
+
+        return pdf_paths
+
     def parse(self, file, id):
         if not self._check_is_secure(file.filename):
             raise 'Not security zip'
@@ -52,8 +62,7 @@ class ZipAdapter:
             zip_ref.extractall(f"source")
 
         os.remove(file.filename)
-        print(f"source/{file.filename[:file.filename.find('.')]}")
-        return os.listdir(f"source/{file.filename[:file.filename.find('.')]}"), f"source/{file.filename[:file.filename.find('.')]}"
+        return self._find_pdf_paths(file.filename)
 
 
 class PDFAdapter:

@@ -30,17 +30,17 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
         files_names = []
         list_fields = []
 
-        files_pdf, header = ZipAdapter().parse(request_archive, id)
+        files_pdf = ZipAdapter().parse(request_archive, id)
 
         with ProcessPoolExecutor() as executor:
             for file_pdf in files_pdf:
-                string_from_pdf = PDFAdapter().extract(header + '/' + file_pdf)
+                string_from_pdf = PDFAdapter().extract(file_pdf)
                 if True:
                     future = executor.submit(process_file, file_pdf, id, extra_name, string_from_pdf)
 
-        shutil.rmtree(header)
 
     except Exception as e:
+        print(e)
         return ResponsePDF(
             id=1111,
             files=[]
@@ -58,17 +58,17 @@ def single_pdf(id: int, extra_name: str, config: Configuration, request_archive:
         list_fields = []
         config = ConfigAdapter().parse(config)
 
-        files_pdf, header = ZipAdapter().parse(request_archive, id)
+        files_pdf = ZipAdapter().parse(request_archive, id)
 
         with ProcessPoolExecutor() as executor:
             for file_pdf in files_pdf:
-                string_from_pdf = PDFAdapter().extract(header + '/' + file_pdf)
+                string_from_pdf = PDFAdapter().extract(file_pdf)
                 if True:
                     future = executor.submit(
                         process_file, file_pdf, id, extra_name,
                         string_from_pdf, config.level_detection, False, config)
 
-        shutil.rmtree(header)
+
 
     except Exception as e:
         return ResponsePDF(
@@ -86,15 +86,15 @@ def search_pdf(id: int, request_archive: UploadFile = File(...)):
     try:
         candidates = []
 
-        files_pdf, header = ZipAdapter().parse(request_archive, id)
+        files_pdf = ZipAdapter().parse(request_archive, id)
 
         with ProcessPoolExecutor() as executor:
             for file_pdf in files_pdf:
-                string_from_pdf = PDFAdapter().extract(header + '/' + file_pdf, only_one_page=True)
+                string_from_pdf = PDFAdapter().extract(file_pdf, only_one_page=True)
                 if True:
-                    future = executor.submit(string_from_pdf)
+                    future = executor.submit(get_headers, string_from_pdf)
                     candidates.extend(future.result())
-        shutil.rmtree(header)
+
     except Exception as e:
         raise e
     return ResponseHypoteticNames(
