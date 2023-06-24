@@ -2,11 +2,12 @@ from Application.ml_models.name_detection.level_0.interface_model import Execute
 from Application.ml_models.validation.level_1.heuristic import find_string_differences
 from Application.pdan import Files
 from scipy.spatial.distance import cosine
+import fasttext.util
 
 
 class FastTextModel(ExecuteModel):
-    def __init__(self, model):
-        self.model = model
+    def __init__(self):
+        self.model = fasttext.load_model('cc.ru.300.bin')
 
     def _fuzzy_find(self, text: str, value: str, max_dist: int = 10):
         text_std = self._standardize(text)
