@@ -9,6 +9,8 @@ from Application.pdan import Files
 
 
 class HeuristicModel(ExecuteModel):
+    import numpy as np
+    import Levenshtein as lev
 
     def _find_local_minima_with_plateau(self, arr, plateau_threshold=0.0):
         minima = []
@@ -31,27 +33,30 @@ class HeuristicModel(ExecuteModel):
         value_std = self._standardize(value)
 
         distances = []
-        reason = []
+        reasons = []
 
-        for i in range(1, len(text_std) - len(value_std)):
+        for i in range(0, len(text_std) - len(value_std) + 1):  # Fixed the range of the loop
             distances.append(lev.distance(text_std[i: i + len(value_std)], value_std))
-            reason.append(self._validate_row(value_std, text_std[i: i + len(value_std)]))
+            reasons.append(self._validate_row(value_std, text_std[i: i + len(value_std)]))
 
         distances = np.array(distances)
-        minima_indecies = self._find_local_minima_with_plateau(distances)
-        if (len(minima_indecies) == 0): return [], []
-        filter = distances[minima_indecies] < max_dist
+        minima_indices = self._find_local_minima_with_plateau(distances)
+        if len(minima_indices) == 0:
+            return [], []
+
+        filtered_indices = minima_indices[distances[minima_indices] < max_dist]
 
         ans = []
         rs = []
         last = -1
-        for ind, elem_pos in enumerate(minima_indecies[filter]):
+        for ind, elem_pos in enumerate(filtered_indices):
             if last != -1 and last + len_str > elem_pos:
                 pass
             else:
                 ans.append(elem_pos)
-                rs.append(reason[ind])
+                rs.append(reasons[ind])
                 last = elem_pos
+
         return ans, rs
 
     def execute(self, file_name, folder, correct_name, page_text):

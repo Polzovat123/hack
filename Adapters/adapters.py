@@ -37,12 +37,12 @@ class ZipAdapter:
 
         with zipfile.ZipFile(file.filename, "r") as zip_ref:
             zip_ref.extractall(f"source/{id}")
-            zip_ref.extractall(f"source")
+            # zip_ref.extractall(f"source")
 
         os.remove(file.filename)
         # return os.listdir("..")
-        # print(f"source/{file.filename[:file.filename.find('.')]}")
-        return os.listdir(f"source/{file.filename[:file.filename.find('.')]}"), f"source/{file.filename[:file.filename.find('.')]}"
+        print(f"source/{file.filename[:file.filename.find('.')]}")
+        return os.listdir(f"source/{id}"), f"source/{id}"
 class PDFAdapter:
 
     def extract(self, path: str, only_one_page=False) -> list[str]:

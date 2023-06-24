@@ -34,7 +34,7 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
         with ProcessPoolExecutor() as executor:
             for file_pdf in files_pdf:
                 string_from_pdf = PDFAdapter().extract(header + '/' + file_pdf)
-                future = executor.submit(process_file, header + '/' + file_pdf, id, extra_name, string_from_pdf)
+                future = executor.submit(process_file, header + '/' + file_pdf, id, extra_name, string_from_pdf, 2)
                 list_fiels.extend(future.result())
 
     except Exception as e:

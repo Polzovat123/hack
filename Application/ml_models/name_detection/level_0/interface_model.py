@@ -42,7 +42,6 @@ class ExecuteModel:
         if True:
             print(file_name)
             print(self._get_new_files([12, 43], file_name, folder, ['error', 'error2'], 0))
-            raise 'I broke'
             ans.extend(self._get_new_files([12, 43], file_name, folder, ['error', 'error2'], 0))
         return ans
 

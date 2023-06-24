@@ -2,7 +2,7 @@ import requests
 
 
 def dialog_paradigm(id, files):
-    url = f'https://family-clients.ru/older/{id}/send-message'
+    url = f'https://family-clients.ru/folder/{id}/send-message'
     requests.post(
         url,
         json={
