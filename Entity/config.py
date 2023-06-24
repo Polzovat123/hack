@@ -14,4 +14,4 @@ class ConfigCompute:
     def __init__(self, level_detection, name_img_parser, level_using, name_validator):
         self.level_detection = level_detection
         self.config_img_parser = ConfigIMG(name_img_parser, level_using)
-        self.config_validator = name_validator
+        self.config_validator = ConfigValidator(name_validator)

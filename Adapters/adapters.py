@@ -3,6 +3,23 @@ import json
 import shutil
 import zipfile
 import pdfplumber
+import subprocess
+
+from Entity.config import ConfigCompute
+
+
+class ConfigAdapter:
+    def parse(self, json_entity):
+        json_entity = json.load(json_entity)
+        level_detection = json_entity['level_detection']
+        name_img_parser = json_entity['img_model']['name_model']
+        level_using = json_entity['img_model']['level_using']
+        name_validator = json_entity['validator_model']['name_model']
+
+        return ConfigCompute(
+            level_detection, name_img_parser,
+            level_using, name_validator
+        )
 
 
 class JSONAdapter:
