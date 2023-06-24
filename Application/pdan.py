@@ -27,6 +27,11 @@ class ConfigurationIMGParser(BaseModel):
     level_using: int #[0-not uses, 1-use only for img page, 2-use always]
 
 
+class ConfigurationValidator(BaseModel):
+    name_model: str
+
+
 class Configuration(BaseModel):
-    config_model: ConfigurationIMGParser = ConfigurationIMGParser(level_using=0)
+    img_model: ConfigurationIMGParser = ConfigurationIMGParser(level_using=0)
+    validator_model: ConfigurationValidator
     level_detection: int = 0
