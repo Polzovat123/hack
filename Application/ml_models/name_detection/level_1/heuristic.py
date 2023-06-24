@@ -35,18 +35,7 @@ class HeuristicModel(ExecuteModel):
 
         for i in range(1, len(text_std) - len(value_std)):
             distances.append(lev.distance(text_std[i: i + len(value_std)], value_std))
-
-            allowed, not_allowed = find_string_differences(
-                value_std, text_std[i: i + len(value_std)]
-            )
-            rs = "Allowed differences:\n"
-            for diff in allowed:
-                rs = rs + f"  - {diff}\n"
-
-            rs = rs + "\nUnallowed differences:\n"
-            for diff in not_allowed:
-                rs = rs + f"  - {diff}\n"
-            reason.append(rs)
+            reason.append(self._validate_row(value_std, text_std[i: i + len(value_std)]))
 
         distances = np.array(distances)
         minima_indecies = self._find_local_minima_with_plateau(distances)
@@ -70,18 +59,6 @@ class HeuristicModel(ExecuteModel):
 
         for page_num, page in enumerate(page_text):
             match_starts, rs = self._fuzzy_find(page, correct_name)
-            for elem_add in match_starts:
-                ans.append(Files(
-                    file_name=file_name,
-                    folder=str(folder),
-                    name=f'Start on {elem_add}',
-                    description=rs[0],
-                    page=page_num
-                ))
-            if (len(match_starts) != 0):
-                print([f"Found title on page "
-                       f"{page_num:3} char {start:4} "
-                       f"{page[start: start + len(correct_name)]}"
-                       for start in match_starts])
+            ans.extend(self._get_new_files(match_starts, file_name, folder, rs, page_num))
 
         return ans

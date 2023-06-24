@@ -5,7 +5,8 @@ from scipy.spatial.distance import cosine
 import fasttext.util
 
 class FastTextModel(ExecuteModel):
-    def __init__(self):
+    def __init__(self, validator):
+        super().__init__(validator)
         self.model = fasttext.load_model('cc.ru.300.bin')
 
     def _fuzzy_find(self, text: str, value: str, max_dist: int = 10):
@@ -25,17 +26,7 @@ class FastTextModel(ExecuteModel):
             emb = self.model.get_sentence_vector(s)
             if 1 - cosine(value_vec, emb) > 0.5:
                 combinations.append(i)
-                allowed, not_allowed = find_string_differences(
-                    value_std, s
-                )
-                rs = "Allowed differences:\n"
-                for diff in allowed:
-                    rs = rs + f"  - {diff}\n"
-
-                rs = "\nUnallowed differences:\n"
-                for diff in not_allowed:
-                    rs = f"  - {diff}\n"
-                reason.append(rs)
+                reason.append(self._validate_row(value_std, text_std[i: i + len(value_std)]))
 
         ans = []
         rs = []
@@ -53,15 +44,7 @@ class FastTextModel(ExecuteModel):
         ans = []
 
         for page_num, page in enumerate(page_text):
-            match_starts, reason = self._fuzzy_find(page, correct_name)
-            for elem_add in match_starts:
-                print(f'Start on {elem_add} pg:{[page_num]}')
-                ans.append(Files(
-                    file_name=file_name,
-                    folder=folder,
-                    name=f'Start on {elem_add}',
-                    description=reason,
-                    page=page_num
-                ))
+            match_starts, rs = self._fuzzy_find(page, correct_name)
+            ans.extend(self._get_new_files(match_starts, file_name, folder, rs, page_num))
 
         return ans
