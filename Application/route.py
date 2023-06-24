@@ -4,7 +4,7 @@ from concurrent.futures import ProcessPoolExecutor
 import shutil
 import stanza
 import requests
-# import fasttext.util
+import fasttext.util
 from fastapi import FastAPI
 
 from Adapters.adapters import *
@@ -29,19 +29,20 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
     try:
         list_fiels = []
 
-        files_pdf = ZipAdapter().parse(request_archive, id)
+        files_pdf, header = ZipAdapter().parse(request_archive, id)
 
         with ProcessPoolExecutor() as executor:
             for file_pdf in files_pdf:
-                string_from_pdf = PDFAdapter().extract(file_pdf)
-                future = executor.submit(process_file, file_pdf, id, extra_name, string_from_pdf, 1, True, None)
+                string_from_pdf = PDFAdapter().extract(header + '/' + file_pdf)
+                future = executor.submit(process_file, header + '/' + file_pdf, id, extra_name, string_from_pdf)
                 list_fiels.extend(future.result())
 
     except Exception as e:
-        return ResponsePDF(
-            id=1111,
-            files=[]
-        )
+        raise e
+        # return ResponsePDF(
+        #     id=1111,
+        #     files=[]
+        # )
     return ResponsePDF(
             id=id,
             files=list_fiels
