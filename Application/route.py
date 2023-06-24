@@ -38,9 +38,7 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
                 if True:
                     future = executor.submit(process_file, file_pdf, id, extra_name, string_from_pdf)
 
-
     except Exception as e:
-        print(e)
         return ResponsePDF(
             id=1111,
             files=[]
