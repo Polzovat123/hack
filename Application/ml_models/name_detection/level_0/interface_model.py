@@ -40,7 +40,7 @@ class ExecuteModel:
     def execute(self, file_name, folder, correct_name, page_text):
         ans = []
         if True:
-            ans.extend(self._get_new_files([], file_name, folder, [], 0))
+            ans.extend(self._get_new_files([12], file_name, folder, ['error'], 0))
         return ans
 
 
