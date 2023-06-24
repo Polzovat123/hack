@@ -24,7 +24,7 @@ class HeuristicModel(ExecuteModel):
 
     def _fuzzy_find(self, text: str, value: str, max_dist: int = 10) -> list[int]:
         len_str = len(value)
-        print(text)
+
         text_std = self._standardize(text)
         value_std = self._standardize(value)
 
@@ -51,7 +51,7 @@ class HeuristicModel(ExecuteModel):
         ans = []
 
         for page_num, page in enumerate(page_text):
-            match_starts = self._fuzzy_find(page, correct_name)
+            match_starts = self._fuzzy_find('перед началом текста '+ page+ ' концовка текста', correct_name)
             for elem_add in match_starts:
                 ans.append(Files(
                     file_name=file_name,
