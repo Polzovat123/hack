@@ -27,15 +27,15 @@ fasttext.util.download_model('ru')
 @app.post('/check_project', response_model=ResponsePDF)
 def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)):
     try:
-        list_fields = []
+        list_fiels = []
 
         files_pdf = ZipAdapter().parse(request_archive, id)
 
         with ProcessPoolExecutor() as executor:
             for file_pdf in files_pdf:
                 string_from_pdf = PDFAdapter().extract(file_pdf)
-                future = executor.submit(process_file, file_pdf, id, extra_name, string_from_pdf)
-                list_fields.extend(future.result())
+                future = executor.submit(process_file, file_pdf, id, extra_name, string_from_pdf, 1, True)
+                list_fiels.extend(future.result())
 
     except Exception as e:
         return ResponsePDF(
@@ -44,7 +44,7 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
         )
     return ResponsePDF(
             id=id,
-            files=list_fields
+            files=list_fiels
     )
 
 
