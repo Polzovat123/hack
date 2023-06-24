@@ -61,7 +61,7 @@ class ZipAdapter:
         with zipfile.ZipFile(file.filename, "r") as zip_ref:
             zip_ref.extractall(f"source")
 
-        os.remove(file.filename)
+        # os.remove(file.filename)
         return self._find_pdf_paths(file.filename)
 
 
