@@ -1,10 +1,11 @@
 import logging
 from concurrent.futures import ProcessPoolExecutor
 
-import requests
-from fastapi import FastAPI
 import shutil
+import stanza
+import requests
 import fasttext.util
+from fastapi import FastAPI
 
 from Adapters.adapters import *
 from Application.dialog import dialog_paradigm
@@ -16,7 +17,7 @@ from Application.ml_models.validation.level_1.heuristic import find_string_diffe
 from Application.pdan import *
 from fastapi import FastAPI, UploadFile, File
 
-from Application.pipeline import process_file
+from Application.pipeline import process_file, get_headers
 
 app = FastAPI(title='MLSER')
 logger = logging.getLogger("uvicorn.error")
@@ -36,7 +37,6 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
                 string_from_pdf = PDFAdapter().extract(header + '/' + file_pdf)
                 if True:
                     future = executor.submit(process_file, file_pdf, id, extra_name, string_from_pdf)
-                    # list_fields.extend(future.result())
 
         shutil.rmtree(header)
 
@@ -78,4 +78,25 @@ def single_pdf(id: int, extra_name: str, config: Configuration, request_archive:
     return ResponsePDF(
             id=id,
             files=list_fields
+    )
+
+
+@app.post('/get_names_project', response_model=ResponseHypoteticNames)
+def search_pdf(id: int, request_archive: UploadFile = File(...)):
+    try:
+        candidates = []
+
+        files_pdf, header = ZipAdapter().parse(request_archive, id)
+
+        with ProcessPoolExecutor() as executor:
+            for file_pdf in files_pdf:
+                string_from_pdf = PDFAdapter().extract(header + '/' + file_pdf, only_one_page=True)
+                if True:
+                    future = executor.submit(string_from_pdf)
+                    candidates.extend(future.result())
+        shutil.rmtree(header)
+    except Exception as e:
+        raise e
+    return ResponseHypoteticNames(
+        candidates=candidates
     )

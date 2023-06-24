@@ -58,10 +58,12 @@ class ZipAdapter:
 
 class PDFAdapter:
 
-    def extract(self, directory: str) -> list[str]:
+    def extract(self, directory: str, only_one_page=False) -> list[str]:
         pages = []
         i=0
         with pdfplumber.open(directory) as pdf:
             for page in pdf.pages:
                 pages.append(page.extract_text())
+                if only_one_page:
+                    break
         return pages

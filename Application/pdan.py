@@ -35,3 +35,7 @@ class Configuration(BaseModel):
     img_model: ConfigurationIMGParser = ConfigurationIMGParser(level_using=0)
     validator_model: ConfigurationValidator
     level_detection: int = 0
+
+
+class ResponseHypoteticNames(BaseModel):
+    candidates: List[str]

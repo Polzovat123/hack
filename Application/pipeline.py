@@ -1,8 +1,11 @@
+import stanza
+
 from Application.dialog import dialog_paradigm
 from Application.ml_models.name_detection.level_0.interface_model import ExecuteModel
 from Application.ml_models.name_detection.level_1.heuristic import HeuristicModel
 from Application.ml_models.name_detection.level_2.fasttext_model import FastTextModel
 from Application.ml_models.name_detection.level_3.sbert import SBERTModel
+from Application.ml_models.name_recognition.level_3.stanza import StanzaNameRecognition
 from Application.ml_models.validation.level_1.heuristic import find_string_differences
 
 
@@ -42,3 +45,14 @@ def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detecti
             dialog_paradigm(id, files)
         else:
             return files
+
+
+def get_headers(string_from_pdf, config=None):
+    candidates_headers = []
+    stanza.download('ru')
+    nlp = stanza.Pipeline('ru')
+
+    if config is None:
+        candidates_headers.extend(StanzaNameRecognition(nlp).extract_organizations(string_from_pdf))
+
+    return candidates_headers
