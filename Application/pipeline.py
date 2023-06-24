@@ -13,21 +13,12 @@ from Application.pdan import Files
 def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detection=1, session=False, config=None):
     if config is None:
         if level_naming_detection == 1:
-            print('heuristic')
-            # files = HeuristicModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
-            files = [(Files(
-                file_name='1.pdf',
-                folder='12',
-                name=f'Start on {34}',
-                description='Incorrect input',
-                page=1
-            ))]
+            files = HeuristicModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
         elif level_naming_detection == 2:
             files = FastTextModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
         elif level_naming_detection == 3:
             files = SBERTModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
         else:
-            print('interface')
             files = ExecuteModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
         if session:
             dialog_paradigm(id, files)
