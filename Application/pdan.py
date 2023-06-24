@@ -19,7 +19,7 @@ class Files(BaseModel):
 
 class ResponsePDF(BaseModel):
     id: int
-    errors: List[Files]
+    files: List[Files]
 
 
 class ConfigurationIMGParser(BaseModel):

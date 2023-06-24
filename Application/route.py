@@ -41,11 +41,11 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
     except Exception as e:
         return ResponsePDF(
             id=1111,
-            errors=[]
+            files=[]
         )
     return ResponsePDF(
             id=id,
-            errors=list_fields
+            files=list_fields
     )
 
 
@@ -71,11 +71,11 @@ def single_pdf(id: int, extra_name: str, config: Configuration, request_archive:
     except Exception as e:
         return ResponsePDF(
             id=1111,
-            errors=[]
+            files=[]
         )
     return ResponsePDF(
             id=id,
-            errors=list_fields
+            files=list_fields
     )
 
 
