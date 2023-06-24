@@ -20,7 +20,7 @@ logger = logging.getLogger("uvicorn.error")
 fasttext.util.download_model('ru')
 
 
-def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detection=1, session=False):
+def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detection=0, session=True):
     files = []
     if level_naming_detection == 1:
         files = HeuristicModel().execute(file_pdf, id, extra_name, string_from_pdf)

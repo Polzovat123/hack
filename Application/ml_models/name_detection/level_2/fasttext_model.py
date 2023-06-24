@@ -4,7 +4,6 @@ from Application.pdan import Files
 from scipy.spatial.distance import cosine
 import fasttext.util
 
-
 class FastTextModel(ExecuteModel):
     def __init__(self):
         self.model = fasttext.load_model('cc.ru.300.bin')
