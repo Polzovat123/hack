@@ -40,6 +40,8 @@ class ExecuteModel:
     def execute(self, file_name, folder, correct_name, page_text):
         ans = []
         if True:
+            print(file_name)
+            print(self._get_new_files([12, 43], file_name, folder, ['error', 'error2'], 0))
             ans.extend(self._get_new_files([12, 43], file_name, folder, ['error', 'error2'], 0))
         return ans
 

@@ -9,7 +9,7 @@ from Application.ml_models.name_recognition.level_3.stanza import StanzaNameReco
 from Application.ml_models.validation.level_1.heuristic import find_string_differences
 
 
-def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detection=0, session=False, config=None):
+def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detection=1, session=False, config=None):
     files = []
     if config is None:
         if level_naming_detection == 1:
@@ -42,10 +42,10 @@ def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detecti
             files = ExecuteModel(validator).execute(file_pdf, id, extra_name, string_from_pdf)
 
 
-        if session:
-            dialog_paradigm(id, files)
-        else:
-            return files
+    if session:
+        dialog_paradigm(id, files)
+    else:
+        return files
 
 
 def get_headers(string_from_pdf, config=None):
