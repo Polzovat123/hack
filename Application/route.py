@@ -17,7 +17,7 @@ from Application.ml_models.validation.level_1.heuristic import find_string_diffe
 from Application.pdan import *
 from fastapi import FastAPI, UploadFile, File
 
-from Application.pipeline import process_file, get_headers
+from Application.pipeline import *
 
 app = FastAPI(title='MLSER')
 logger = logging.getLogger("uvicorn.error")
