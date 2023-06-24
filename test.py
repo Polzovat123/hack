@@ -1,28 +1,10 @@
-# import requests
-#
-# # Open the file to be uploaded
-# file_path = r'D:\12.zip'
-# with open(file_path, 'rb') as file:
-#     files = {'archive': (file.name, file)}
-#
-#     # Create the request data dictionary
-#     data = {
-#         'id': 12,
-#         'extra_name': 'qweqweqw',
-#         # 'archive': open(r'D:\12.zip', 'rb')
-#     }
-#
-#     # Send the request
-#     response = requests.post(
-#         'http://127.0.0.1:6432/check_project',
-#         json=data)
-#
-# # Print the response
-# print(response.json())
+import time
+
 import requests
 
 # Set the endpoint URL
-url = 'http://localhost:6432/check_project'
+url_i = 'http://178.205.138.31:6432/check_project'
+url = 'http://127:0.0.1:6432/check_project'
 
 # Prepare the request data
 data = {
@@ -38,9 +20,11 @@ files = {
     'request_archive': open(file_path, 'rb')
 }
 
-# Send the request
-response = requests.post(url, params=data, files=files)
-
+start_time = time.time()
+response = requests.post(url_i, params=data, files=files)
+end_time = time.time()
+request_time = end_time - start_time
+print(f"Время выполнения запроса: {request_time} секунд")
 # Print the response
 print(response.json())
 
