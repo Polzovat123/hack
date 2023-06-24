@@ -35,4 +35,5 @@ class PDFAdapter:
         with pdfplumber.open(directory) as pdf:
             for page in pdf.pages:
                 pages.append(page.extract_text())
+                break
         return pages

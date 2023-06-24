@@ -1,6 +1,8 @@
 import logging
+from concurrent.futures import ProcessPoolExecutor
 
 from fastapi import FastAPI
+import shutil
 # import fasttext.util
 
 from Adapters.adapters import *
@@ -15,6 +17,10 @@ logger = logging.getLogger("uvicorn.error")
 # LemanRuss = fasttext.load_model('cc.ru.300.bin')
 
 
+def process_file(file_pdf, id, extra_name, string_from_pdf):
+    return HeuristicModel().execute(file_pdf, id, extra_name, string_from_pdf)
+
+
 @app.post('/check_project', response_model=ResponsePDF)
 def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)):
     try:
@@ -23,12 +29,15 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
 
         files_pdf, header = ZipAdapter().parse(request_archive, id)
 
-        for file_pdf in files_pdf:
-            string_from_pdf = PDFAdapter().extract(header+'/'+file_pdf)
-            if True:
-                list_fields.extend(HeuristicModel().execute(file_pdf, id, extra_name, string_from_pdf))
-            elif False:
-                list_fields.extend(FastTextModel(LemanRuss).execute(file_pdf, id, extra_name, string_from_pdf))
+        with ProcessPoolExecutor() as executor:
+            for file_pdf in files_pdf:
+                string_from_pdf = PDFAdapter().extract(header + '/' + file_pdf)
+                if True:
+                    future = executor.submit(process_file, file_pdf, id, extra_name, string_from_pdf)
+                    list_fields.extend(future.result())
+
+        shutil.rmtree(header)
+
     except Exception as e:
         return ResponsePDF(
             id=1111,

@@ -1,3 +1,5 @@
+from multiprocessing import Process
+
 import numpy as np
 import Levenshtein as lev
 
