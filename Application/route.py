@@ -27,20 +27,14 @@ fasttext.util.download_model('ru')
 @app.post('/check_project', response_model=ResponsePDF)
 def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)):
     try:
-        list_fields = [Files(
-                file_name='1.pdf',
-                folder='airat/like/dick',
-                name=f'Start on {23}',
-                description='ERROR AI БУНТУЕТ РАБОТАТЬ НЕ ХОЧЕТ',
-                page=34
-            )]
+        list_fields = []
 
         files_pdf = ZipAdapter().parse(request_archive, id)
 
         with ProcessPoolExecutor() as executor:
             for file_pdf in files_pdf:
                 string_from_pdf = PDFAdapter().extract(file_pdf)
-                # future = executor.submit(process_file, file_pdf, id, extra_name, string_from_pdf)
+                future = executor.submit(process_file, file_pdf, id, extra_name, string_from_pdf)
 
     except Exception as e:
         return ResponsePDF(
