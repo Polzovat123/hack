@@ -41,7 +41,6 @@ def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detecti
         #     files = ExecuteModel(validator).execute(file_pdf, id, extra_name, string_from_pdf)
         ...
 
-
     if session:
         dialog_paradigm(id, files)
     else:
