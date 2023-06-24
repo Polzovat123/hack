@@ -27,7 +27,13 @@ fasttext.util.download_model('ru')
 @app.post('/check_project', response_model=ResponsePDF)
 def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)):
     try:
-        list_fields = []
+        list_fields = [Files(
+                file_name='1.pdf',
+                folder='airat/like/dick',
+                name=f'Start on {23}',
+                description='ERROR AI БУНТУЕТ РАБОТАТЬ НЕ ХОЧЕТ',
+                page=34
+            )]
 
         files_pdf = ZipAdapter().parse(request_archive, id)
 
