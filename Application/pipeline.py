@@ -13,6 +13,7 @@ def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detecti
     files = []
     if config is None:
         if level_naming_detection == 1:
+            print('heuristic')
             files = HeuristicModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
         elif level_naming_detection == 2:
             files = FastTextModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
