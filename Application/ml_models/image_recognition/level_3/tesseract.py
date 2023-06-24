@@ -1,7 +1,7 @@
 import pytesseract
 from PIL import Image
 
-class InterfaceImageRecognition:
+class TesseractImageRecognition:
 
     def parse_pdf(self, pdf_image):
         """
@@ -18,7 +18,7 @@ class InterfaceImageRecognition:
         image = Image.open(pdf_image)
 
         # Use Tesseract to do OCR on the image
-        text = pytesseract.image_to_string(image)
+        text = pytesseract.image_to_string(image, lang="rus")
 
         # Return the detected text
         return text
