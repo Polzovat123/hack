@@ -31,7 +31,11 @@ class PDFAdapter:
 
     def extract(self, directory: str) -> list[str]:
         pages = []
+        i=0
         with pdfplumber.open(directory) as pdf:
             for page in pdf.pages:
                 pages.append(page.extract_text())
+                if i == 2:
+                    break
+                i+=1
         return pages

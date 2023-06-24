@@ -27,7 +27,7 @@ url = 'http://localhost:6432/check_project'
 # Prepare the request data
 data = {
     'id': 123,
-    'extra_name': 'example_name',
+    'extra_name': 'Общество с ограниченной ответственностью "КАББАЛКГИПРОТРАНС"',
 }
 
 # Set the file path of the archive to be uploaded

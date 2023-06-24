@@ -1,7 +1,7 @@
 import logging
 
 from fastapi import FastAPI
-import fasttext.util
+# import fasttext.util
 
 from Adapters.adapters import *
 from Application.ml_models.name_detection.level_0.interface_model import ExecuteModel
@@ -11,8 +11,8 @@ from fastapi import FastAPI, UploadFile, File
 
 app = FastAPI(title='MLSER')
 logger = logging.getLogger("uvicorn.error")
-fasttext.util.download_model('ru')
-LemanRuss = fasttext.load_model('cc.ru.300.bin')
+# fasttext.util.download_model('ru')
+# LemanRuss = fasttext.load_model('cc.ru.300.bin')
 
 
 @app.post('/check_project', response_model=ResponsePDF)

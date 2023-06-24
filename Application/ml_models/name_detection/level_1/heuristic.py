@@ -2,6 +2,7 @@ import numpy as np
 import Levenshtein as lev
 
 from Application.ml_models.name_detection.level_0.interface_model import ExecuteModel
+from Application.ml_models.validation.level_1.heuristic import find_string_differences
 from Application.pdan import Files
 
 
@@ -23,6 +24,7 @@ class HeuristicModel(ExecuteModel):
 
     def _fuzzy_find(self, text: str, value: str, max_dist: int = 10) -> list[int]:
         len_str = len(value)
+        print(text)
         text_std = self._standardize(text)
         value_std = self._standardize(value)
 
@@ -55,7 +57,7 @@ class HeuristicModel(ExecuteModel):
                     file_name=file_name,
                     folder=folder,
                     name=f'Start on {elem_add}',
-                    description='desct',
+                    description='rs',
                     page=page_num
                 ))
             if (len(match_starts) != 0):
