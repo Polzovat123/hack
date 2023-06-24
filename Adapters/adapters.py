@@ -15,7 +15,19 @@ class JSONAdapter:
 
 
 class ZipAdapter:
+    def _check_is_secure(self, path):
+        result = subprocess.run(['clamscan', '-r', path], capture_output=True, text=True)
+        output = result.stdout.lower()
+
+        if "infected files: 0" in output:
+            return True
+        else:
+            return False
+
     def parse(self, file, id):
+        if not self._check_is_secure(file.filename):
+            raise 'Not security zip'
+
         with open(file.filename, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
