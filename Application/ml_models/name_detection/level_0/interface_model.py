@@ -26,11 +26,11 @@ class ExecuteModel:
     def _get_new_files(self, match_starts, file_path, folder, rs, page_num):
         ans = []
         for elem_add in match_starts:
-            directory = os.path.dirname(file_path)
-            filename = os.path.basename(file_path)
+            # directory = os.path.dirname(file_path)
+            # filename = os.path.basename(file_path)
             ans.append(Files(
-                file_name=filename,
-                folder=directory,
+                file_name='1.pdf',
+                folder='12',
                 name=f'Start on {elem_add}',
                 description=rs[0],
                 page=page_num
