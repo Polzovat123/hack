@@ -22,7 +22,7 @@
 import requests
 
 # Set the endpoint URL
-url = 'http://localhost:6432/check_project'
+url = 'http://178.205.138.31:6432/check_project'
 
 # Prepare the request data
 data = {
