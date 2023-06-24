@@ -11,6 +11,7 @@ from Application.ml_models.validation.level_1.heuristic import find_string_diffe
 
 def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detection=1, session=False, config=None):
     files = []
+    print()
     if config is None:
         if level_naming_detection == 1:
             print('heuristic')
@@ -20,6 +21,7 @@ def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detecti
         elif level_naming_detection == 3:
             files = SBERTModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
         else:
+            print('interface')
             files = ExecuteModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
         if session:
             dialog_paradigm(id, files)
