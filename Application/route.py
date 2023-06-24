@@ -93,7 +93,7 @@ def search_pdf(id: int, request_archive: UploadFile = File(...)):
             for file_pdf in files_pdf:
                 string_from_pdf = PDFAdapter().extract(header + '/' + file_pdf, only_one_page=True)
                 if True:
-                    future = executor.submit(string_from_pdf)
+                    future = executor.submit(get_headers, string_from_pdf)
                     candidates.extend(future.result())
         shutil.rmtree(header)
     except Exception as e:

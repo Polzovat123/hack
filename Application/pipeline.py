@@ -53,6 +53,6 @@ def get_headers(string_from_pdf, config=None):
     nlp = stanza.Pipeline('ru')
 
     if config is None:
-        candidates_headers.extend(StanzaNameRecognition(nlp).extract_organizations(string_from_pdf))
+        candidates_headers.extend(StanzaNameRecognition(nlp).extract_organizations(string_from_pdf[0]))
 
     return candidates_headers
