@@ -35,6 +35,7 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
             for file_pdf in files_pdf:
                 string_from_pdf = PDFAdapter().extract(file_pdf)
                 future = executor.submit(process_file, file_pdf, id, extra_name, string_from_pdf)
+                list_fields.extend(future.result())
 
     except Exception as e:
         return ResponsePDF(
