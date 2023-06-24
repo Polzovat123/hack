@@ -19,7 +19,7 @@ def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detecti
         elif level_naming_detection == 3:
             files = SBERTModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
         else:
-            files = ExecuteModel.execute(file_pdf, id, extra_name, string_from_pdf)
+            files = ExecuteModel(find_string_differences).execute(file_pdf, id, extra_name, string_from_pdf)
         if session:
             dialog_paradigm(id, files)
         else:
