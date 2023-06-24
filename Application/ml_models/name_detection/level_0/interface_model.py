@@ -1,3 +1,5 @@
+import os
+
 from Application.pdan import Files
 
 
@@ -21,12 +23,14 @@ class ExecuteModel:
             rs = rs + f"  - {diff}\n"
         return rs
 
-    def _get_new_files(self, match_starts, file_name, folder, rs, page_num):
+    def _get_new_files(self, match_starts, file_path, folder, rs, page_num):
         ans = []
         for elem_add in match_starts:
+            directory = os.path.dirname(file_path)
+            filename = os.path.basename(file_path)
             ans.append(Files(
-                file_name=file_name,
-                folder=str(folder),
+                file_name=filename,
+                folder=directory,
                 name=f'Start on {elem_add}',
                 description=rs[0],
                 page=page_num
