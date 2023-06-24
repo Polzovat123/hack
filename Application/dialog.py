@@ -10,3 +10,26 @@ def dialog_paradigm(id, files):
             'files': files
         }
     )
+
+
+'''
+{
+    'id': 123,
+    'files': [
+        {
+            'file_name': '12',
+            'folder': '12/1.pdf',
+            'name': 'Starts on 45',
+            'description': 'Allowed differences:\n',
+            'page': 1
+        },
+        {
+            'file_name': '12',
+            'folder': '12/1.pdf',
+            'name': 'Starts on 34',
+            'description': 'Allowed differences:\n',
+            'page': 3
+        }
+    ]
+}
+'''
