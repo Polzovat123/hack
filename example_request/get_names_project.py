@@ -3,13 +3,12 @@ import time
 import requests
 
 # Set the endpoint URL
-url_i = 'http://178.205.138.31:6432/check_project'
+url_i = 'http://178.205.138.31:6432/get_names_project'
 url = 'http://127:0.0.1:6432/check_project'
 
 # Prepare the request data
 data = {
     'id': 123,
-    'extra_name': 'Общество с ограниченной ответственностью "КАББАЛКГИПРОТРАНС"',
 }
 
 # Set the file path of the archive to be uploaded
@@ -25,6 +24,5 @@ response = requests.post(url_i, params=data, files=files)
 end_time = time.time()
 request_time = end_time - start_time
 print(f"Время выполнения запроса: {request_time} секунд")
-# Print the response
 print(response.json())
 
