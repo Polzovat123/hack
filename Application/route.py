@@ -27,7 +27,6 @@ fasttext.util.download_model('ru')
 @app.post('/check_project', response_model=ResponsePDF)
 def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)):
     try:
-        files_names = []
         list_fields = []
 
         files_pdf = ZipAdapter().parse(request_archive, id)
@@ -50,7 +49,7 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
 
 
 @app.post('/check_project_advance', response_model=ResponsePDF)
-def single_pdf(id: int, extra_name: str, config: Configuration, request_archive: UploadFile = File(...)):
+def single_pdf(id: int, extra_name: str, config: Optional[Configuration], request_archive: UploadFile = File(...)):
     try:
         files_names = []
         list_fields = []
@@ -64,7 +63,7 @@ def single_pdf(id: int, extra_name: str, config: Configuration, request_archive:
                 if True:
                     future = executor.submit(
                         process_file, file_pdf, id, extra_name,
-                        string_from_pdf, config.level_detection, False, config)
+                        string_from_pdf, config.level_detection, True, config)
 
 
 

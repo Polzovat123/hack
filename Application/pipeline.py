@@ -36,7 +36,7 @@ def process_file(file_pdf, id, extra_name, string_from_pdf, level_naming_detecti
         elif level_naming_detection == 2:
             files = FastTextModel(validator).execute(file_pdf, id, extra_name, string_from_pdf)
         elif level_naming_detection == 3:
-            files = SBERTModel(validator).execute(file_pdf, id, extra_name, string_from_pdf)
+            files = SBERTModel(validator).execute(file_pdf, id, extra_name, string_from_pdf, 0.7)
         else:
             files = ExecuteModel(validator).execute(file_pdf, id, extra_name, string_from_pdf)
 
