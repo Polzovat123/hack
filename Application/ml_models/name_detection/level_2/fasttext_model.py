@@ -24,7 +24,7 @@ class FastTextModel(ExecuteModel):
                 combination.append(words[i + j])
             s = " ".join(combination)
             emb = self.model.get_sentence_vector(s)
-            if 1 - cosine(value_vec, emb) > 0.5:
+            if 1 - cosine(value_vec, emb) > 0.7:
                 combinations.append(i)
                 reason.append(self._validate_row(value_std, text_std[i: i + len(value_std)]))
 
