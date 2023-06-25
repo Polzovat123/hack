@@ -39,10 +39,6 @@ def single_pdf(id: int, extra_name: str, request_archive: UploadFile = File(...)
 
     except Exception as e:
         raise e
-        # return ResponsePDF(
-        #     id=1111,
-        #     files=[]
-        # )
     return ResponsePDF(
             id=id,
             files=list_fiels
